@@ -40,13 +40,13 @@ VALUES
     ('Для правительственной связи'),
     ('Международный');
 
-INSERT INTO call (from_number_id, to_number, dialing_code, payphone_id, token_id, call_duration)
+INSERT INTO call (to_number, dialing_code, payphone_id, token_id, call_duration)
 VALUES
-    (1, '934245634512', '81', 1, 1, 3600),
-    (2, '894322716459', 'RUS', 4, 4, 100),
-    (2, '894322716459', 'RUS', 3, 4, 10000000),
-    (4, '818111294536', 'MIA', 6, 3, 15634),
-    (3, '888324563956', '999', 2, 1, 3600);
+    ('934245634512', '81', 1, 1, 3600),
+    ('894322716459', 'RUS', 4, 4, 100),
+    ('894322716459', 'RUS', 3, 4, 10000000),
+    ('818111294536', 'MIA', 6, 3, 15634),
+    ('888324563956', '999', 2, 1, 3600);
 
 INSERT INTO subscriber_credit_token (subscriber_id, token_id)
 VALUES
