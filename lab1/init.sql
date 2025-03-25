@@ -28,13 +28,11 @@ CREATE TABLE Credit_token (
 
 CREATE TABLE Call (
     call_id SERIAL PRIMARY KEY,
-    from_number_id INT NOT NULL,
     to_number CHAR(12) NOT NULL,
     dialing_code CHAR(3) NOT NULL,
     payphone_id INT NULL,  -- Если звонок из автомата
     token_id INT NULL,  -- Если использован жетон
     call_duration INT NOT NULL,  -- Длительность в секундах
-    FOREIGN KEY (from_number_id) REFERENCES Phone_number(phone_number_id) ON DELETE CASCADE,
     FOREIGN KEY (dialing_code) REFERENCES Dialing_code(country_code),
     FOREIGN KEY (payphone_id) REFERENCES Payphone(payphone_id) ON DELETE SET NULL,
     FOREIGN KEY (token_id) REFERENCES Credit_token(token_id) ON DELETE SET NULL
