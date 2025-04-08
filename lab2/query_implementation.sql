@@ -65,3 +65,30 @@ WHERE "Н_ЛЮДИ"."ИД" = "Н_УЧЕНИКИ"."ЧЛВК_ИД"
                                         WHERE "НС_ИД" IN (SELECT "ИД"
                                                           FROM "Н_НАПР_СПЕЦ"
                                                           WHERE "НАИМЕНОВАНИЕ" = 'Программная инженерия')));
+
+-- Седьмое задание
+WITH Студенты_С_Отчествами AS (SELECT "Н_ЛЮДИ"."ИД"                           AS id,
+                                      "ФАМИЛИЯ"                               AS surname,
+                                      "ИМЯ"                                   AS name,
+                                      "ОТЧЕСТВО"                              AS patronymic,
+                                      "ДАТА_РОЖДЕНИЯ"                         AS birth,
+                                      COUNT(*) OVER (PARTITION BY "ОТЧЕСТВО") AS Количество_С_Отчеством
+                               FROM "Н_ЛЮДИ"
+                                        JOIN "Н_УЧЕНИКИ" ON "Н_ЛЮДИ"."ИД" = "Н_УЧЕНИКИ"."ЧЛВК_ИД"
+                               WHERE "ОТЧЕСТВО" IS NOT NULL)
+
+SELECT DISTINCT a.surname    AS Фамилия1,
+                a.name       AS Имя1,
+                a.patronymic AS Отчество1,
+                a.birth      AS Дата_рождения1,
+                b.surname    AS Фамилия2,
+                b.name       AS Имя2,
+                b.patronymic AS Отчество2,
+                b.birth      AS Дата_рождения2
+FROM Студенты_С_Отчествами a
+         JOIN Студенты_С_Отчествами b ON
+    a.patronymic = b.patronymic AND
+    a.id < b.id AND
+    a.birth <> b.birth
+WHERE a.Количество_С_Отчеством > 1
+ORDER BY a.patronymic, a.surname, a.name;
