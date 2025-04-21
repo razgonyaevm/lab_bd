@@ -67,15 +67,16 @@ WHERE "Н_ЛЮДИ"."ИД" = "Н_УЧЕНИКИ"."ЧЛВК_ИД"
                                                           WHERE "НАИМЕНОВАНИЕ" = 'Программная инженерия')));
 
 -- Седьмое задание
-WITH Студенты_С_Отчествами AS (SELECT "Н_ЛЮДИ"."ИД"                           AS id,
-                                      "ФАМИЛИЯ"                               AS surname,
-                                      "ИМЯ"                                   AS name,
-                                      "ОТЧЕСТВО"                              AS patronymic,
-                                      "ДАТА_РОЖДЕНИЯ"                         AS birth,
-                                      COUNT(*) OVER (PARTITION BY "ОТЧЕСТВО") AS Количество_С_Отчеством
-                               FROM "Н_ЛЮДИ"
-                                        JOIN "Н_УЧЕНИКИ" ON "Н_ЛЮДИ"."ИД" = "Н_УЧЕНИКИ"."ЧЛВК_ИД"
-                               WHERE "ОТЧЕСТВО" IS NOT NULL)
+CREATE VIEW Студенты_С_Отчествами AS
+SELECT "Н_ЛЮДИ"."ИД"                           AS id,
+       "ФАМИЛИЯ"                               AS surname,
+       "ИМЯ"                                   AS name,
+       "ОТЧЕСТВО"                              AS patronymic,
+       "ДАТА_РОЖДЕНИЯ"                         AS birth,
+       COUNT(*) OVER (PARTITION BY "ОТЧЕСТВО") AS Количество_С_Отчеством
+FROM "Н_ЛЮДИ"
+         JOIN "Н_УЧЕНИКИ" ON "Н_ЛЮДИ"."ИД" = "Н_УЧЕНИКИ"."ЧЛВК_ИД"
+WHERE "ОТЧЕСТВО" IS NOT NULL;
 
 SELECT DISTINCT a.surname    AS Фамилия1,
                 a.name       AS Имя1,
