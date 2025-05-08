@@ -6,7 +6,7 @@ VALUES
     ('Алексей Смирнов', 'Новосибирск, ул. Гагарина, д. 5'),
     ('Александр Сергеев', 'Где-то на съемках Саша-Таня');
 
-INSERT INTO phone_number (number, subscriber_id)
+INSERT INTO phone_number (number, subscriber)
 VALUES
     ('912342184536', 1),
     ('111029343956', 2),
@@ -40,7 +40,7 @@ VALUES
     ('Для правительственной связи'),
     ('Международный');
 
-INSERT INTO call (to_number, dialing_code, payphone_id, token_id, call_duration)
+INSERT INTO call (to_number, dialing_code, payphone, token, call_duration)
 VALUES
     ('934245634512', '81', 1, 1, 3600),
     ('894322716459', 'RUS', 4, 4, 100),
