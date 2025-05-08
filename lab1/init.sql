@@ -1,47 +1,53 @@
-CREATE TABLE Subscriber (
-    subscriber_id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    address TEXT
+CREATE TABLE SUBSCRIBER
+(
+    ID      SERIAL PRIMARY KEY,
+    NAME    VARCHAR(100) NOT NULL,
+    ADDRESS TEXT
 );
 
-CREATE TABLE Phone_number (
-    phone_number_id SERIAL PRIMARY KEY,
-    number CHAR(12) NOT NULL UNIQUE,
-    subscriber_id INT NOT NULL,
-    FOREIGN KEY (subscriber_id) REFERENCES Subscriber(subscriber_id) ON DELETE CASCADE
+CREATE TABLE PHONE_NUMBER
+(
+    ID         SERIAL PRIMARY KEY,
+    SUBSCRIBER INT NOT NULL,
+    FOREIGN KEY (SUBSCRIBER) REFERENCES SUBSCRIBER (ID) ON DELETE CASCADE
 );
 
-CREATE TABLE Dialing_code (
-    country_code CHAR(3) PRIMARY KEY,
-    country_name VARCHAR(100) NOT NULL
+CREATE TABLE CREDIT_TOKEN
+(
+    ID         SERIAL PRIMARY KEY,
+    TOKEN_TYPE VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE Payphone (
-    payphone_id SERIAL PRIMARY KEY,
-    location VARCHAR(255) NOT NULL
+CREATE TABLE SUBSCRIBER_CREDIT_TOKEN
+(
+    SUBSCRIBER_ID INT,
+    TOKEN_ID      INT,
+    PRIMARY KEY (SUBSCRIBER_ID, TOKEN_ID),
+    FOREIGN KEY (SUBSCRIBER_ID) REFERENCES SUBSCRIBER (ID) ON DELETE CASCADE,
+    FOREIGN KEY (TOKEN_ID) REFERENCES CREDIT_TOKEN (ID) ON DELETE CASCADE
 );
 
-CREATE TABLE Credit_token (
-    token_id SERIAL PRIMARY KEY,
-    token_type VARCHAR(50) NOT NULL
+CREATE TABLE DIALING_CODE
+(
+    COUNTRY_CODE CHAR(3) PRIMARY KEY,
+    COUNTRY_NAME VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE Call (
-    call_id SERIAL PRIMARY KEY,
-    to_number CHAR(12) NOT NULL,
-    dialing_code CHAR(3) NOT NULL,
-    payphone_id INT NULL,  -- Если звонок из автомата
-    token_id INT NULL,  -- Если использован жетон
-    call_duration INT NOT NULL,  -- Длительность в секундах
-    FOREIGN KEY (dialing_code) REFERENCES Dialing_code(country_code),
-    FOREIGN KEY (payphone_id) REFERENCES Payphone(payphone_id) ON DELETE SET NULL,
-    FOREIGN KEY (token_id) REFERENCES Credit_token(token_id) ON DELETE SET NULL
+CREATE TABLE PAYPHONE
+(
+    ID       SERIAL PRIMARY KEY,
+    LOCATION VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Subscriber_credit_token (
-    subscriber_id INT,
-    token_id INT,
-    PRIMARY KEY (subscriber_id, token_id),
-    FOREIGN KEY (subscriber_id) REFERENCES Subscriber(subscriber_id) ON DELETE CASCADE,
-    FOREIGN KEY (token_id) REFERENCES Credit_token(token_id) ON DELETE CASCADE
+CREATE TABLE CALL
+(
+    ID            SERIAL PRIMARY KEY,
+    TO_NUMBER     CHAR(12) NOT NULL,
+    DIALING_CODE  CHAR(3)  NOT NULL,
+    PAYPHONE      INT      NULL,
+    TOKEN         INT      NULL,
+    CALL_DURATION INT      NOT NULL,
+    FOREIGN KEY (DIALING_CODE) REFERENCES DIALING_CODE (COUNTRY_CODE),
+    FOREIGN KEY (PAYPHONE) REFERENCES PAYPHONE (ID),
+    FOREIGN KEY (TOKEN) REFERENCES CREDIT_TOKEN (ID)
 );
