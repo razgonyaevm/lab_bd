@@ -28,6 +28,7 @@ CREATE TABLE Credit_token (
 
 CREATE TABLE Call (
     call_id SERIAL PRIMARY KEY,
+    from_number CHAR(12) NOT NULL,
     to_number CHAR(12) NOT NULL,
     dialing_code CHAR(3) NOT NULL,
     payphone_id INT NULL,  -- Если звонок из автомата
