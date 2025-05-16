@@ -1,8 +1,8 @@
 ## Вариант `84711`
 
-| .pdf                             | .docx                             | scripts                                  |
-|----------------------------------|-----------------------------------|------------------------------------------|
-| [report](./docs/report_lab3.pdf) | [report](./docs/report_lab3.docx) | [sql_script](./query_implementation.sql) |
+| .pdf                             | .docx                             | function and trigger     |
+|----------------------------------|-----------------------------------|--------------------------|
+| [report](./docs/report_lab3.pdf) | [report](./docs/report_lab3.docx) | [sql_script](./func_and_trigger.sql) |
 
 **Задание.**
 
